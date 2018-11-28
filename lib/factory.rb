@@ -27,6 +27,13 @@ class Factory
      def new_class(*args, &block)
       Class.new do
         attr_accessor(*args)
+        define_method :initialize do |*args_value|
+          raise ArgumentError unless args.length == args_value.length
+
+          args.zip(args_value).each do |instance_key, instance_value|
+            instance_variable_set("@#{instance_key}", instance_value)
+          end
+        end
       end
     end
   end
