@@ -34,6 +34,7 @@ class Factory
             instance_variable_set("@#{instance_key}", instance_value)
           end
         end
+        class_eval(&block) if block_given?
       end
     end
   end
