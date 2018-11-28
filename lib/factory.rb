@@ -14,3 +14,20 @@
 # - to_a
 # - values_at
 # - ==, eql?
+
+
+class Factory
+  class << self
+    def new(*args, &block)
+      if args.first.is_a? String
+        const_set(args.shift.capitalize, new_class(*args, &block))
+      end
+      new_class(*args, &block)
+    end
+     def new_class(*args, &block)
+      Class.new do
+        attr_accessor(*args)
+      end
+    end
+  end
+end
